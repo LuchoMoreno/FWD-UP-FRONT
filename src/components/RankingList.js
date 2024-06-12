@@ -27,7 +27,7 @@ function RankingList() {
                 {data.map(ranking => (
                     <Col key={ranking._id} sm={4} md={4} lg={4} xl={4}>
                         <Card className="mb-6">
-                        <Card.Header>{ranking.dollType}</Card.Header>
+                        <Card.Header className="text-center"> <strong>{ranking.dollType}</strong></Card.Header>
                             <Card.Body>
                                 <Card.Text className="text-center">{ranking.chosenCount}</Card.Text>
                             </Card.Body>
