@@ -9,6 +9,7 @@ function Profile() {
 
   
   const [user, setUser] = useState(null);
+  const [userDolls, setUserDolls] = useState([]);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     type: '',
@@ -43,7 +44,10 @@ function Profile() {
       try {
         const userData = await apiPrivate.get('/api/users/' + '6669122fb7632a796bacd610');
         setUser(userData);
-        console.log(userData);
+
+        const userDolls = await apiPrivate.get('/api/users/' + '6669122fb7632a796bacd610' + '/dolls');
+        setUserDolls(userDolls.data);
+
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -135,10 +139,25 @@ function Profile() {
         </Container>
 
         <Container className="mt-5">
-            <Card>
-                <Card.Header className="text-center">Peluches en propiedad</Card.Header>
+        <Card>
+                <Card.Header className="text-center">Peluches en Propiedad</Card.Header>
                 <Card.Body>
-                   
+                    <Row>
+                        {userDolls.map(doll => (
+                            <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
+                                <Card className="mb-4">
+                                    {/* Aquí puedes personalizar la visualización de cada peluche */}
+                                    <Card.Img variant="top" src={doll.image} /> {/* Ejemplo de imagen */}
+                                    <Card.Body>
+                                        <Card.Title>{doll.type}</Card.Title> {/* Nombre del peluche */}
+                                        <Card.Text>{doll.color}</Card.Text> {/* Descripción del peluche */}
+                                        <Card.Text>{doll.accessories}</Card.Text> {/* Color del peluche */}
+                                        {/* Otros campos del peluche según tu API */}
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
                 </Card.Body>
             </Card>
         </Container>
