@@ -8,6 +8,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
+import { AuthProvider } from './contexts/AuthContext';
+
+
 // PARA INICIALIZAR:
 // - PRIMERO LEVANTAR BACKEND CON NODE INDEX.JX
 
@@ -18,16 +21,19 @@ import Profile from './pages/Profile';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+        <Router>
+          <div>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </div>
+        </Router>
+    </AuthProvider>
+
   );
 }
 

@@ -1,24 +1,33 @@
-// contexts/AuthContext.js
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
-function AuthProvider({ children }) {
-  const [token, setToken] = useState("");
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
 
-  const login = (newToken) => {
-    setToken(newToken);
-  };
+  useEffect(() => {
+      if (token) {
+          localStorage.setItem('token', token);
+      } else {
+          localStorage.removeItem('token');
+      }
+  }, [token]);
 
-  const logout = () => {
-    setToken("");
-  };
+    const login = async (token) => {
+        setToken(token);
+        localStorage.setItem('token', token);
+    };
 
-  return (
-    <AuthContext.Provider value={{ token, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+    const logout = () => {
+        setToken(null);
+        localStorage.removeItem('token');
+    };
 
-export { AuthContext, AuthProvider };
+    return (
+        <AuthContext.Provider value={{ token, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => useContext(AuthContext);

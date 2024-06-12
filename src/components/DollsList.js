@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Pagination, Container } from 'react-bootstrap';
 
-import api from '../services/api'; // Instancia de axios
+import {apiPublic} from '../services/api'; // Instancia de axios
 import oso from '../../src/assets/imgs/oso.png';
 import jirafa from '../../src/assets/imgs/jirafa.png';
 import defaultImage from '../../src/assets/imgs/default.png';
@@ -29,7 +29,7 @@ function DollList() {
     const fetchDolls = async () => {
         const offset = (currentPage - 1) * limit;
         try {
-            const response = await api.get(`/api/dolls?limit=${limit}&offset=${offset}`);
+            const response = await apiPublic.get(`/api/dolls?limit=${limit}&offset=${offset}`);
 
             setDolls(response.data.result);
 
@@ -60,13 +60,14 @@ function DollList() {
             <Row>
                 {dolls.map(doll => (
                     <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
-                        <Card className="mb-4">
+                        <Card className="mb-5">
+                        <Card.Header>{doll.type}</Card.Header>
                         <Card.Img variant="top" src={dollImages[doll.type] || dollImages.default} />
                             <Card.Body>
-                                <Card.Text>{doll.color}</Card.Text>
-                                <Card.Text>{doll.accessories}</Card.Text>
-                                <Card.Text>{doll.user.email}</Card.Text>
+                                <Card.Text>Color: {doll.color}</Card.Text>
+                                <Card.Text>Accesorios: {doll.accessories}</Card.Text>
                             </Card.Body>
+                        <Card.Footer className="text-muted">{doll.user.email}</Card.Footer>
                         </Card>
                     </Col>
                 ))}
