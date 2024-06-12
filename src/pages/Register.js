@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { apiPublic } from '../services/api'; // Instancia de axios
-import { useAuth } from '../contexts/AuthContext';
 
+function Register() {
 
-function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Utiliza el contexto de autenticación para obtener la función de login
-  const [formData, setFormData] = useState({email: '', password: '' });
+
+
+  const [formData, setFormData] = useState({isActive: true, name: '', lastname : '', email: '', password: '' });
   const [error, setError] = useState('');
 
 
@@ -23,19 +23,21 @@ function Login() {
     
     try 
     {
-      const response = await apiPublic.post('/api/auth/login', formData);
+
+      //"name": "Lucho",
+      //"lastname": "Moreno",
+      //"email": "lucho.moreno@live.com",
+      //"password": "1234"
       
-      const token = response.data;
-      
-      await login(token); 
-      
-      navigate('/profile');
+      const response = await apiPublic.post('/api/users', formData);
+    
+      navigate('/login');
 
     } catch (error) {
       if (error.response && error.response.status === 401) {
-          setError('Credenciales inválidas. Por favor, inténtelo de nuevo.');
+          setError('Por favor, inténtelo de nuevo.');
       } else {
-          setError('Error al iniciar sesión. Por favor, inténtelo más tarde.');
+          setError('Ha ocurrido un error');
       }
   }
   };
@@ -45,9 +47,19 @@ function Login() {
       <Row className="justify-content-center">
         <Col xs={12} sm={8} md={6}>
           <div className="bg-light p-4 rounded shadow">
-            <h2 className="text-center mb-4">Iniciar Sesión</h2>
+            <h2 className="text-center mb-4">Crear cuenta</h2>
 
             <Form onSubmit={handleSubmit}>
+
+            <Form.Group>
+                <Form.Label>Nombre:</Form.Label>
+                <Form.Control type="name" name="name" value={formData.name} onChange={handleChange} />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Apellido:</Form.Label>
+                <Form.Control type="lastname" name="lastname" value={formData.lastname} onChange={handleChange} />
+              </Form.Group>
 
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email:</Form.Label>
@@ -59,15 +71,11 @@ function Login() {
                 <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} />
               </Form.Group>
 
-
               {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
 
-              <Button variant="primary" type="submit" className="mx-auto d-block mt-3">Iniciar Sesión</Button>
+              <Button variant="primary" type="submit" className="mx-auto d-block mt-3">Registrarse</Button>
 
             </Form>
-            <p className="text-center mt-3">
-              ¿No tienes una cuenta? <Link to="/register">Regístrate</Link>
-            </p>
           </div>
         </Col>
       </Row>
@@ -75,4 +83,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
