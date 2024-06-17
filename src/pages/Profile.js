@@ -11,12 +11,7 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [userDolls, setUserDolls] = useState([]);
   const [error, setError] = useState('');
-  const [formData, setFormData] = useState({
-    type: '',
-    color: '',
-    accessories: '',
-    userId: '6669122fb7632a796bacd610'
-  });
+  const [formData, setFormData] = useState({type: '', color: '', accessories: ''});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,12 +35,13 @@ function Profile() {
   };
 
   useEffect(() => {
+
     const fetchUserData = async () => {
       try {
-        const userData = await apiPrivate.get('/api/users/' + '6669122fb7632a796bacd610');
+        const userData = await apiPrivate.get('/api/users/me');
         setUser(userData);
 
-        const userDolls = await apiPrivate.get('/api/users/' + '6669122fb7632a796bacd610' + '/dolls');
+        const userDolls = await apiPrivate.get('/api/users/me/dolls');
         setUserDolls(userDolls.data);
 
       } catch (error) {
@@ -54,7 +50,9 @@ function Profile() {
     };
 
     fetchUserData();
+    
   }, []);
+
 
   if (!user) {
     return <h2>Intentando obtener la información del perfil...</h2>;
@@ -148,12 +146,18 @@ function Profile() {
                                 <Card className="mb-4">
                                     {/* Aquí puedes personalizar la visualización de cada peluche */}
                                     <Card.Img variant="top" src={doll.image} /> {/* Ejemplo de imagen */}
+                                    
                                     <Card.Body>
                                         <Card.Title>{doll.type}</Card.Title> {/* Nombre del peluche */}
                                         <Card.Text>{doll.color}</Card.Text> {/* Descripción del peluche */}
                                         <Card.Text>{doll.accessories}</Card.Text> {/* Color del peluche */}
                                         {/* Otros campos del peluche según tu API */}
                                     </Card.Body>
+                                    
+                                    <Card.Footer className="text-center">
+                                    <Button variant="danger">Eliminar</Button>{' '}
+                                    </Card.Footer>
+
                                 </Card>
                             </Col>
                         ))}
