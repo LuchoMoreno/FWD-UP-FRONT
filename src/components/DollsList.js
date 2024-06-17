@@ -2,19 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Pagination, Container } from 'react-bootstrap';
 
 import {apiPublic} from '../services/api'; // Instancia de axios
-import oso from '../../src/assets/imgs/oso.png';
-import jirafa from '../../src/assets/imgs/jirafa.png';
-import perro from '../../src/assets/imgs/perro.png';
-import gato from '../../src/assets/imgs/gato.png';
+
 import defaultImage from '../../src/assets/imgs/default.png';
 
-const dollImages = {
-    Oso: oso,
-    Jirafa: jirafa,
-    Perro: perro,
-    Gato: gato,
-    default: defaultImage // Imagen predeterminada para muñecos sin imagen específica
-    // Agrega más tipos de muñecos con sus respectivas imágenes aquí
+// Función para obtener la ruta de la imagen basada en tipo y color
+const getImagePath = (type, color) => {
+    const imageName = `${type.toLowerCase()}-${color.toLowerCase()}.png`;
+    try {
+        // Intentamos importar la imagen
+        return require(`../../src/assets/imgs/${imageName}`);
+    } catch (error) {
+        // Si no se encuentra, usamos la imagen predeterminada
+        console.warn(`Image not found: ${imageName}, using default image.`);
+        return defaultImage;
+    }
+};
+
+// Función para formatear la fecha y hora en dd/mm/yyyy hh:mm:ss
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false // Formato 24 horas
+    };
+    return date.toLocaleDateString('es-ES', options).replace(',', '');
 };
 
 
@@ -57,6 +73,7 @@ function DollList() {
         }
     };
 
+
     return (
         <Container>
             <h1>Lista de Muñecos</h1>
@@ -66,10 +83,11 @@ function DollList() {
                     <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
                         <Card className="mb-5">
                         <Card.Header>{doll.type}</Card.Header>
-                        <Card.Img variant="top" src={dollImages[doll.type] || dollImages.default} />
+                            <Card.Img variant="top" src={getImagePath(doll.type, doll.color)} />
                             <Card.Body>
                                 <Card.Text>Color: {doll.color}</Card.Text>
                                 <Card.Text>Accesorios: {doll.accessories}</Card.Text>
+                                <Card.Text>Agregado: {formatDate(doll.createdAt)}</Card.Text>
                             </Card.Body>
                         <Card.Footer className="text-muted">{doll.user.email}</Card.Footer>
                         </Card>
