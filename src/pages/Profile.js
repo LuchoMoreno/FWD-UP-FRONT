@@ -107,6 +107,7 @@ function Profile() {
                             <Form.Label>Color:</Form.Label>
                             <Form.Control as="select" name="color" value={formData.color} onChange={handleChange}>
                                 <option value="">Seleccionar color...</option>
+                                <option value="Default">Sin pintar</option>
                                 <option value="Blanco">Blanco</option>
                                 <option value="Negro">Negro</option>
                                 <option value="Rojo">Rojo</option>
