@@ -4,11 +4,15 @@ import { Card, Row, Col, Pagination, Container } from 'react-bootstrap';
 import {apiPublic} from '../services/api'; // Instancia de axios
 import oso from '../../src/assets/imgs/oso.png';
 import jirafa from '../../src/assets/imgs/jirafa.png';
+import perro from '../../src/assets/imgs/perro.png';
+import gato from '../../src/assets/imgs/gato.png';
 import defaultImage from '../../src/assets/imgs/default.png';
 
 const dollImages = {
     Oso: oso,
     Jirafa: jirafa,
+    Perro: perro,
+    Gato: gato,
     default: defaultImage // Imagen predeterminada para muñecos sin imagen específica
     // Agrega más tipos de muñecos con sus respectivas imágenes aquí
 };
