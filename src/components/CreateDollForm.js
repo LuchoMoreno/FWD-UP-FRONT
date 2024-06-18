@@ -147,7 +147,7 @@ const CreateDollForm = ({ onSuccess }) => {
         </Modal.Header>
         <Modal.Body>
 
-        <div className="row">
+          <div className="row">
             <Col sm={6} md={6} lg={6} xl={6}>
               <Card className="mb-5">
                 <Card.Header className="text-center">Tu peluche se verá así:</Card.Header>
@@ -162,13 +162,13 @@ const CreateDollForm = ({ onSuccess }) => {
               </Card>
             </Col>
           </div>
-          
+
           <p><strong>Tipo:</strong> {formData.type}</p>
           <p><strong>Color:</strong> {formData.color}</p>
           <p><strong>Accesorios:</strong> {formData.accessories}</p>
           <p>¿Estás seguro de que deseas crear este peluche?</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="justify-content-center">
           <Button variant="secondary" onClick={closeModal}>
             Cancelar
           </Button>
