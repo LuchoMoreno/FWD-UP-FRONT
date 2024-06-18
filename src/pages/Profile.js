@@ -1,9 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Button, Row, Col, Card } from 'react-bootstrap';
+import { Container, Button, Row, Col, Card, Carousel } from 'react-bootstrap';
 import { apiPrivate } from '../services/api'; // Instancia de axios
 
 import CreateDollForm from '../components/CreateDollForm'; // Importa el nuevo componente
 
+import defaultImage from '../../src/assets/imgs/default.png';
+
+// Función para obtener la ruta de la imagen basada en tipo y color
+const getImagePath = (type, color) => {
+    const imageName = `${type.toLowerCase()}-${color.toLowerCase()}.png`;
+    try {
+        // Intentamos importar la imagen
+        return require(`../../src/assets/imgs/${imageName}`);
+    } catch (error) {
+        // Si no se encuentra, usamos la imagen predeterminada
+        console.warn(`Image not found: ${imageName}, using default image.`);
+        return defaultImage;
+    }
+};
+
+// Función para obtener la ruta de la imagen basada en tipo y color
+const getImagePathInstrument = (type) => {
+    const imageName = `${type.toLowerCase()}.png`;
+    try {
+        // Intentamos importar la imagen
+        return require(`../../src/assets/imgs/${imageName}`);
+    } catch (error) {
+        // Si no se encuentra, usamos la imagen predeterminada
+        console.warn(`Image not found: ${imageName}, using default image.`);
+        return defaultImage;
+    }
+};
 
 function Profile() {
 
@@ -74,12 +101,24 @@ function Profile() {
               {userDolls.map(doll => (
                 <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
                   <Card className="mb-4">
-                    <Card.Img variant="top" src={doll.image} /> {/*Imagen del peluche*/}
+
+                    <Card.Header className="text-center">
+                      <Card.Title>{doll.type}</Card.Title> {/* Nombre del peluche */}
+                    </Card.Header>
+
+                    <Carousel interval={null}>
+                                <Carousel.Item>
+                                    <Card.Img variant="top" src={getImagePath(doll.type, doll.color)} />
+                                </Carousel.Item>
+
+                                <Carousel.Item>
+                                    <Card.Img variant="top" src={getImagePathInstrument(doll.accessories)} />
+                                </Carousel.Item>
+                    </Carousel>
 
                     <Card.Body>
-                      <Card.Title>{doll.type}</Card.Title> {/* Nombre del peluche */}
-                      <Card.Text>{doll.color}</Card.Text> {/* Descripción del peluche */}
-                      <Card.Text>{doll.accessories}</Card.Text> {/* Color del peluche */}
+                      <Card.Text>Color: {doll.color}</Card.Text> {/* Descripción del peluche */}
+                      <Card.Text>Accesorio: {doll.accessories}</Card.Text> {/* Color del peluche */}
                     </Card.Body>
 
                     <Card.Footer className="text-center">

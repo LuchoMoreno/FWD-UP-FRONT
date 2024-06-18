@@ -96,10 +96,12 @@ function DollList() {
                 {dolls.map(doll => (
                     <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
                         <Card className="mb-5">
-                            <Card.Header>{doll.type}</Card.Header>
                             
+                            <Card.Header>
+                                {doll.type}
+                            </Card.Header>
+
                             <Carousel interval={null}>
-                                
                                 <Carousel.Item>
                                     <Card.Img variant="top" src={getImagePath(doll.type, doll.color)} />
                                 </Carousel.Item>
@@ -107,12 +109,14 @@ function DollList() {
                                 <Carousel.Item>
                                     <Card.Img variant="top" src={getImagePathInstrument(doll.accessories)} />
                                 </Carousel.Item>
+                            </Carousel>
 
-                            </Carousel>                            <Card.Body>
+                            <Card.Body>
                                 <Card.Text>Color: {doll.color}</Card.Text>
                                 <Card.Text>Accesorios: {doll.accessories}</Card.Text>
                                 <Card.Text>Agregado: {formatDate(doll.createdAt)}</Card.Text>
                             </Card.Body>
+
                             <Card.Footer className="text-muted">{doll.user.email}</Card.Footer>
                         </Card>
                     </Col>

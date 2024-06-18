@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Alert, Card, Container, Modal, Row, Col } from 'react-bootstrap';
+import { Form, Button, Alert, Card, Container, Modal, Col } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
 import { apiPrivate } from '../services/api'; // Instancia de axios
