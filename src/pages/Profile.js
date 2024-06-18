@@ -58,6 +58,16 @@ function Profile() {
   }, []);
 
 
+  const handleDelete = async (dollId) => {
+    try {
+      await apiPrivate.delete(`/api/dolls/${dollId}`);
+      fetchUserData();
+    } catch (error) {
+      console.error('Error deleting doll:', error);
+    }
+  };
+
+
   if (!user) {
     return <h2>Intentando obtener la información del perfil...</h2>;
   }
@@ -122,7 +132,7 @@ function Profile() {
                     </Card.Body>
 
                     <Card.Footer className="text-center">
-                      <Button variant="danger">Eliminar</Button>{/* Boton para eliminar peluche */}
+                    <Button variant="danger" onClick={() => handleDelete(doll.id)}>Eliminar</Button>
                     </Card.Footer>
 
                   </Card>
