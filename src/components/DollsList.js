@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from 'react';
 
-import { Card, Row, Col, Pagination, Container } from 'react-bootstrap';
+import { Card, Row, Col, Pagination, Container, Carousel } from 'react-bootstrap';
 
-import {apiPublic} from '../services/api'; // Instancia de axios
+import { apiPublic } from '../services/api'; // Instancia de axios
 
 import defaultImage from '../../src/assets/imgs/default.png';
 
 // Función para obtener la ruta de la imagen basada en tipo y color
 const getImagePath = (type, color) => {
     const imageName = `${type.toLowerCase()}-${color.toLowerCase()}.png`;
+    try {
+        // Intentamos importar la imagen
+        return require(`../../src/assets/imgs/${imageName}`);
+    } catch (error) {
+        // Si no se encuentra, usamos la imagen predeterminada
+        console.warn(`Image not found: ${imageName}, using default image.`);
+        return defaultImage;
+    }
+};
+
+// Función para obtener la ruta de la imagen basada en tipo y color
+const getImagePathInstrument = (type) => {
+    const imageName = `${type.toLowerCase()}.png`;
     try {
         // Intentamos importar la imagen
         return require(`../../src/assets/imgs/${imageName}`);
@@ -83,20 +96,30 @@ function DollList() {
                 {dolls.map(doll => (
                     <Col key={doll._id} sm={12} md={6} lg={4} xl={3}>
                         <Card className="mb-5">
-                        <Card.Header>{doll.type}</Card.Header>
-                            <Card.Img variant="top" src={getImagePath(doll.type, doll.color)} />
-                            <Card.Body>
+                            <Card.Header>{doll.type}</Card.Header>
+                            
+                            <Carousel interval={null}>
+                                
+                                <Carousel.Item>
+                                    <Card.Img variant="top" src={getImagePath(doll.type, doll.color)} />
+                                </Carousel.Item>
+
+                                <Carousel.Item>
+                                    <Card.Img variant="top" src={getImagePathInstrument(doll.accessories)} />
+                                </Carousel.Item>
+
+                            </Carousel>                            <Card.Body>
                                 <Card.Text>Color: {doll.color}</Card.Text>
                                 <Card.Text>Accesorios: {doll.accessories}</Card.Text>
                                 <Card.Text>Agregado: {formatDate(doll.createdAt)}</Card.Text>
                             </Card.Body>
-                        <Card.Footer className="text-muted">{doll.user.email}</Card.Footer>
+                            <Card.Footer className="text-muted">{doll.user.email}</Card.Footer>
                         </Card>
                     </Col>
                 ))}
             </Row>
 
-        
+
 
             <Pagination className="justify-content-center">
                 <Pagination.First onClick={() => handlePageChange(1)} />
