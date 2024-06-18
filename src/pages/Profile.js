@@ -42,13 +42,13 @@ function Profile() {
         <Card>
           <Card.Header className="text-center">Perfil de Usuario</Card.Header>
           <Card.Body>
-            <div className="text-center mb-3">
+            {/*<div className="text-center mb-3">
               <img
                 src={user.profileImage}
                 alt="Imagen"
                 style={{ maxWidth: '200px', borderRadius: '50%' }}
               />
-            </div>
+            </div>*/}
             <Card.Title className="text-center">{user.data.name}</Card.Title>
 
             <Card.Title className="text-center">{user.data.lastname}</Card.Title>

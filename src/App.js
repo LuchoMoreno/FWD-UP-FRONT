@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-do
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from './components/Header';
+import Footer from './components/Footer'; // Importa el componente Footer
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+
 
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
@@ -38,6 +40,7 @@ function App() {
                   <Route path="/profile" element={<PrivateRoute> <Profile /> </PrivateRoute>} />            
               </Routes>
           </div>
+          <Footer /> {/* Agrega el componente Footer al final de tu aplicación */}
         </Router>
     </AuthProvider>
 

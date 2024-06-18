@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 function Header() {
     const comicFontStyle = {
         fontFamily: 'Comic2, cursive',
-        fontSize: '1rem', // Tamaño de fuente más grande
+        fontSize: '1.3rem', // Tamaño de fuente más grande
     };
 
     const { token, logout } = useAuth();
