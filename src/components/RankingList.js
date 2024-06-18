@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardGroup, Row, Col, Container } from 'react-bootstrap';
+import { Card, Row, Col, Container } from 'react-bootstrap';
 
 import  {apiPublic} from '../services/api'; // Instancia de axios
 
