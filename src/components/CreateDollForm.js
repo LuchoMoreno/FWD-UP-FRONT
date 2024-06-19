@@ -6,8 +6,13 @@ import { apiPrivate } from '../services/api'; // Instancia de axios
 
 import defaultImage from '../../src/assets/imgs/default.png';
 
+import { useToast } from '../contexts/ToastContext';
+
 
 const CreateDollForm = ({ onSuccess }) => {
+
+  const { addToast } = useToast();
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({ type: '', color: '', accessories: '' });
@@ -35,6 +40,7 @@ const CreateDollForm = ({ onSuccess }) => {
     try {
       const response = await apiPrivate.post('/api/dolls', formData);
       onSuccess();
+      addToast('success', 'Se ha generado un peluche con éxito!');
       navigate('/');
     } catch (error) {
       if (error.response && error.response.status === 401) {

@@ -6,6 +6,8 @@ import CreateDollForm from '../components/CreateDollForm'; // Importa el nuevo c
 
 import defaultImage from '../../src/assets/imgs/default.png';
 
+import { useToast } from '../contexts/ToastContext';
+
 // Función para obtener la ruta de la imagen basada en tipo y color
 const getImagePath = (type, color) => {
     const imageName = `${type.toLowerCase()}-${color.toLowerCase()}.png`;
@@ -36,6 +38,7 @@ function Profile() {
 
   const [user, setUser] = useState(null);
   const [userDolls, setUserDolls] = useState([]);
+  const { addToast } = useToast();
 
   const fetchUserData = async () => {
     try {
@@ -61,6 +64,7 @@ function Profile() {
   const handleDelete = async (dollId) => {
     try {
       await apiPrivate.delete(`/api/dolls/${dollId}`);
+      addToast('danger', 'Se ha borrado un peluche con éxito!');
       fetchUserData();
     } catch (error) {
       console.error('Error deleting doll:', error);

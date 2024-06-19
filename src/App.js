@@ -12,6 +12,8 @@ import Register from './pages/Register';
 
 
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
+
 
 
 // PARA INICIALIZAR:
@@ -29,20 +31,22 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
-    <AuthProvider>
-        <Router>
-          <div>
-            <Header />
-              <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/profile" element={<PrivateRoute> <Profile /> </PrivateRoute>} />            
-              </Routes>
-          </div>
-          <Footer /> {/* Agrega el componente Footer al final de tu aplicación */}
-        </Router>
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+          <Router>
+            <div>
+              <Header />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/profile" element={<PrivateRoute> <Profile /> </PrivateRoute>} />            
+                </Routes>
+            </div>
+            <Footer /> {/* Agrega el componente Footer al final de tu aplicación */}
+          </Router>
+      </AuthProvider>
+    </ToastProvider>
 
   );
 }

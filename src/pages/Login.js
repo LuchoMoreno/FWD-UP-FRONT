@@ -41,7 +41,7 @@ function Login() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 vh-100">
       <Row className="justify-content-center">
         <Col xs={12} sm={8} md={6}>
           <div className="bg-light p-4 rounded shadow">

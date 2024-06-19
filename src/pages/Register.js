@@ -1,17 +1,19 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { apiPublic } from '../services/api'; // Instancia de axios
+
+import { useToast } from '../contexts/ToastContext';
+
 
 function Register() {
 
   const navigate = useNavigate();
 
-
   const [formData, setFormData] = useState({isActive: true, name: '', lastname : '', email: '', password: '' });
   const [error, setError] = useState('');
-
+  const { addToast } = useToast();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,14 +25,8 @@ function Register() {
     
     try 
     {
-
-      //"name": "Lucho",
-      //"lastname": "Moreno",
-      //"email": "lucho.moreno@live.com",
-      //"password": "1234"
-      
       const response = await apiPublic.post('/api/users', formData);
-    
+      addToast('success', 'El usuario se ha registrado correctamente. ¡Bienvenido!');
       navigate('/login');
 
     } catch (error) {
@@ -43,7 +39,7 @@ function Register() {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 vh-100">
       <Row className="justify-content-center">
         <Col xs={12} sm={8} md={6}>
           <div className="bg-light p-4 rounded shadow">
